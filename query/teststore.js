@@ -6,11 +6,10 @@ const bodyParser = require('body-parser')
 const sql = require("mssql");
 
 let config = require('./config.js');
-// config for your database
 
 app.use(cors())
-app.use('/api', bodyParser.json() ,router)
-app.use('/api', bodyParser.urlencoded({extended:false}) ,router)
+app.use('/api', bodyParser.json(), router)
+app.use('/api', bodyParser.urlencoded({ extended: false }), router)
 
 
 /* 
@@ -37,29 +36,29 @@ app.get('/', function (req, res) {
 });
 */
 
+app.get('/api', (req, res) => res.send('Welcome To API-DoctorNote'))
 
-app.get('/api/DoctorListDetails', function (req, res) { 
- 
- // connect to your database
- sql.connect(config, function (err) {
- 
- if (err) console.log(err);
- 
- // create Request object
- var request = new sql.Request();
- 
- // query to the database and get the data
- request.execute('dbo.DN_DoctorListDetalis', function (err, DoctorListDetails) {
- 
- if (err) console.log(err)
- 
- // send data as a response
- res.send(DoctorListDetails);
- 
- });
- });
+
+app.get('/api/DoctorListDetails', function (req, res) {
+
+    // connect to your database
+    sql.connect(config, function (err) {
+
+        if (err) console.log(err);
+
+        // create Request object
+        var request = new sql.Request();
+
+        // query to the database and get the data
+        request.execute('dbo.DN_DoctorListDetalis', function (err, DoctorListDetails) {
+
+            if (err) console.log(err)
+
+            // send data as a response
+            res.send(DoctorListDetails);
+
+        });
+    });
 });
- 
-var server = app.listen(8005,  ()=> {
- console.log('Server is running.. on Port 8005');
-});
+
+app.listen(4000, () => {   console.log('Server is running.. on Port 8005');});
